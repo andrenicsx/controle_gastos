@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#242049" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="CASHEYE" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="apple-touch-icon" href="icon.svg" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>CASHEYE | Personal finance</title>
+  </head>
+  <body>
+    <main class="app">
+      <header class="hero">
+        <div>
+          <p class="brand">CASHEYE</p>
+          <h1>Clear vision.<br />Better decisions.</h1>
+          <p class="subtle">Track every move your money makes.</p>
+        </div>
+        <label class="period-control">Period
+          <input id="period" type="month" />
+        </label>
+      </header>
+
+      <section class="summary" aria-label="Financial summary">
+        <article class="stat balance"><span>Period balance</span><strong id="balance">R$ 0,00</strong><small id="balanceNote">Start by adding a transaction.</small></article>
+        <article class="stat income"><span>Income</span><strong id="income">R$ 0,00</strong><small>Money received</small></article>
+        <article class="stat expense"><span>Expenses</span><strong id="expense">R$ 0,00</strong><small>Money spent</small></article>
+      </section>
+
+      <section class="dashboard">
+        <section class="panel form-panel">
+          <div class="section-intro"><h2 id="formTitle">New transaction</h2><p>Add a new money movement.</p></div>
+          <form id="transactionForm">
+            <div class="two-columns">
+              <label>Type<select id="type"><option value="Expense">Expense</option><option value="Income">Income</option></select></label>
+              <label>Payment method<select id="payment"><option>Cash</option><option selected>PIX</option><option>Debit card</option><option>Credit card</option><option>Meal voucher</option><option>Bank transfer</option><option>Other</option></select></label>
+            </div>
+            <label>Description<input id="description" maxlength="60" placeholder="e.g. Grocery shopping" required /></label>
+            <div class="two-columns">
+              <label>Amount (R$)<input id="amount" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="0,00" required /></label>
+              <label>Date<input id="date" type="date" required /></label>
+            </div>
+            <div class="two-columns">
+              <label>Category<select id="category"></select></label>
+              <label id="installmentField">Installments<input id="installments" type="number" min="1" max="48" value="1" /><small id="installmentHint">Credit card only.</small></label>
+            </div>
+            <div class="form-actions"><button class="button primary" id="submitButton" type="submit">Add transaction</button><button class="button ghost hidden" id="cancelEdit" type="button">Cancel</button></div>
+          </form>
+        </section>
+
+        <section class="panel transactions-panel">
+          <div class="panel-heading"><div><h2>Your transactions</h2><p id="listDescription">Transactions for this period.</p></div><div class="heading-actions"><button id="importButton" class="text-button" type="button">Import</button><button id="exportButton" class="text-button" type="button">Export CSV</button></div></div>
+          <input id="importInput" type="file" accept="application/json,.json" hidden />
+          <div class="filter-row"><select id="typeFilter" aria-label="Filter by type"><option value="All">All transactions</option><option value="Expense">Expenses</option><option value="Income">Income</option></select></div>
+          <div id="transactionList" class="transaction-list"></div>
+        </section>
+
+        <aside class="panel insights-panel">
+          <div class="section-intro"><h2>Expenses by category</h2><p>Breakdown for this period.</p></div>
+          <div id="chart" class="chart"></div>
+        </aside>
+      </section>
+    </main>
+    <template id="transactionTemplate"><article class="transaction"><div class="transaction-main"><strong class="transaction-description"></strong><span class="transaction-meta"></span></div><div class="transaction-value"><strong></strong><div><button class="icon-button edit" title="Edit transaction" aria-label="Edit transaction">Edit</button><button class="icon-button delete" title="Delete transaction" aria-label="Delete transaction">Delete</button></div></div></article></template>
+    <script src="app.js"></script>
+  </body>
+</html>
